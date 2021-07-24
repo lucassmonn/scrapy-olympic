@@ -12,8 +12,9 @@ class ScrapeTableSpider(scrapy.Spider):
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
-        for row in response.xpath('/html/body/div/div[2]/main/section/div[2]/table[3]//tbody/tr'):
+        for row in response.xpath('/html/body/div/div[2]/main/section/div[2]/table[2]/tbody[1]/tr'):
             yield {
+                'place': row.xpath('td[1]//text()').extract_first(),
                 'country': row.xpath('td[1]//text()').extract_first(),
                 'gold': row.xpath('td[2]//text()').extract_first(),
                 'silver': row.xpath('td[3]//text()').extract_first(),
